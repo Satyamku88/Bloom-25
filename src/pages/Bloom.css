@@ -1,0 +1,200 @@
+/* Bloom.css */
+.bloom-container {
+    background: linear-gradient(135deg, #fff5f5, #ffecec);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 2rem auto;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    position: relative;
+}
+
+.chat-container {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    animation: headerGradient 8s ease infinite;
+}
+
+@keyframes headerGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.chat-messages {
+    height: 550px;
+    padding: 1.8rem;
+    overflow-y: auto;
+    background: linear-gradient(to bottom right, #fff8f8, #fff0f0);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.message {
+    max-width: 75%;
+    padding: 1.2rem;
+    border-radius: 1.5rem;
+    line-height: 1.4;
+    position: relative;
+    animation: messageAppear 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transition: transform 0.2s ease;
+}
+
+.user-message {
+    background: linear-gradient(135deg, #ff9a9e, #ff7aa2);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.bot-message {
+    background: linear-gradient(135deg, #ffffff, #fff5f5);
+    color: #5a5a5a;
+    margin-right: auto;
+    border-bottom-left-radius: 0.5rem;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.input-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    background: white;
+    border-top: 1px solid #f0f0f0;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid #f0f0f0;
+    border-radius: 2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fffafa;
+}
+
+.chat-input:focus {
+    outline: none;
+    border-color: #ff9a9e;
+    box-shadow: 0 0 0 4px rgba(255, 154, 158, 0.15);
+}
+
+.button-group {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+.send-button {
+    background: linear-gradient(135deg, #ff9a9e, #ff7aa2);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.send-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 122, 162, 0.3);
+}
+
+.voice-button {
+    background: linear-gradient(135deg, #ff9a9e, #ff7aa2);
+    color: white;
+    border: none;
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: 0.7rem;
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.voice-button {
+    position: static;
+    bottom: auto;
+    right: auto;
+    box-shadow: 0 2px 8px rgba(255, 122, 162, 0.2);
+  }
+
+.voice-button.listening {
+    animation: pulse 1.5s infinite;
+    background: linear-gradient(135deg, #ff6b6b, #ff4757);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+.typing-indicator {
+    color: #ff7aa2;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 500;
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 2rem;
+    color: #ff7aa2;
+    animation: welcomeFade 1.5s ease;
+}
+
+@keyframes welcomeFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bloom-container {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        padding: 1rem;
+    }
+    
+    .chat-messages {
+        height: 65vh;
+    }
+    
+    .input-container {
+        flex-wrap: wrap;
+    }
+    
+    .chat-input {
+        width: 100%;
+    }
+    
+    .button-group {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
