@@ -1,3 +1,7 @@
+AI-Powered Healthcare Solutions for Rural Communities
+Saving Lives, Bridging Gaps, Empowering Communities
+
+
 Team: The Hack Guys
 
 Hackathon Theme: Innovative Solutions for Social Impact
