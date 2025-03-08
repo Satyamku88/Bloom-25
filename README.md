@@ -78,7 +78,7 @@ Collapse
 Wrap
 
 Copy
-git clone https://github.com/TheHackGuys/AI-Healthcare-Rural.git
+git clone(https://github.com/Satyamku88/Bloom-25.git)
 Install dependencies:
 bash
 
