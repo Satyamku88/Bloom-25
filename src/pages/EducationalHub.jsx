@@ -11,14 +11,7 @@ const EducationalHub = () => {
       link: "https://iris.who.int/bitstream/handle/10665/69735/a91272.pdf",
       videoLink: "https://www.youtube.com/watch?v=Vgmv9kn7o1Y"
     },
-    {
-      id: 2,
-      title: "Child Vaccination",
-      type: "guide",
-      description: "Complete vaccination schedule and safety information for children.",
-      link: "/src/assets/Vaccination.pdf",
-      videoLink: "https://youtu.be/w9AoeEywXdY?si=LoU2twHRapXT1rTE"
-    },
+    
     {
       id: 3,
       title: "Hygiene Masterclass",
@@ -27,14 +20,7 @@ const EducationalHub = () => {
       link: "https://www.youtube.com/watch?v=l6XGE-Xuq3M&t=248s",
       duration: "12:45"
     },
-    {
-      id: 4,
-      title: "Emergency First Aid",
-      type: "guide",
-      description: "Life-saving techniques for common emergencies.",
-      link: "/src/assets/First-Aid.pdf",
-      infographic: "/assets/First-Aid-Infographic.png"
-    },
+   
     {
       id: 5,
       title: "Child Nutrition",
