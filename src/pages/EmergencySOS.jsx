@@ -12,14 +12,14 @@ const EmergencySOS = () => {
 
   // Twilio configuration (replace with your actual credentials)
   const TWILIO = {
-    ACCOUNT_SID: 'your sid ',
-    AUTH_TOKEN: 'you tocken',
-    PHONE_NUMBER: '+phone numberr'
+    ACCOUNT_SID: 'AC46598fc68cb247bba4378e39a0712053 ',
+    AUTH_TOKEN: '83236e2195b4830e9d7f02c7174ababf',
+    PHONE_NUMBER: '+916202361088',
   };
 
   // Verified emergency contacts
   const CONTACTS = {
-    FAMILY: ['phone number 3', 'phone number 2'],
+    FAMILY: ['+919155588990', 'phone number 2'],
     AMBULANCE: '+phone number'
   };
 
