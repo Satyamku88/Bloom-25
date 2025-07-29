@@ -12,10 +12,10 @@ const Bloom = () => {
   const synthesis = useRef(null);
 
   // Initialize Google Generative AI (make sure you have installed @google/generative-ai)
-  const apiKey = "AIzaSyDOeIPH1LSme3luWMMVFB2bMVnQCQZUll4"; // Replace with your actual API key
+  const apiKey = "AIzaSyD5HMDOD4c3okb21pA0WXXSkdsAi03tu_k"; // Replace with your actual API key
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-pro-exp-02-05",
+    model: "gemini-2.0-flash",
     systemInstruction:
       "You are Bloom, a compassionate pregnancy support assistant. Provide empathetic, medically accurate information about prenatal care, nutrition, and pregnancy-related concerns. Always maintain a supportive and reassuring tone. Speak responses naturally and conversationally."
   });
