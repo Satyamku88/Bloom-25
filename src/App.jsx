@@ -1,34 +1,36 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import SymptomChecker from "./pages/SymptomChecker";
-import Teleconsultation from "./pages/Teleconsultation";
-import EmergencySOS from "./pages/EmergencySOS";
-import EducationalHub from "./pages/EducationalHub";
-import MedicineReminder from "./pages/MedicineReminder";
-import OfflineAccess from "./pages/OfflineAccess";
-import VoiceAssistance from "./pages/VoiceAssistance";
 import Bloom from "./pages/Bloom";
+import SymptomChecker from "./pages/SymptomChecker";
+import MedicineReminder from "./pages/MedicineReminder";
+import EducationalHub from "./pages/EducationalHub";
+import EmergencySOS from "./pages/EmergencySOS";
+import Teleconsultation from "./pages/Teleconsultation";
+import "./App.css";
 
-
-
-const App = () => {
+function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/symptom-checker" element={<SymptomChecker />} />
-        <Route path="/teleconsultation" element={<Teleconsultation />} />
-        <Route path="/emergency-sos" element={<EmergencySOS />} />
-        <Route path="/educational-hub" element={<EducationalHub />} />
-        <Route path="/medicine-reminder" element={<MedicineReminder />} />
-        <Route path="/offline-access" element={<OfflineAccess />} />
-        <Route path="/voice-assistance" element={<VoiceAssistance />} />
-        <Route path="/bloom_assistant" element={<Bloom />} />
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-      </Routes>
+      <div className="App">
+        <Routes>
+          {/* Route for the Home page */}
+          <Route path="/" element={<Home />} />
+
+          {/* Add routes for all the other pages here */}
+          <Route path="/bloom" element={<Bloom />} />
+          <Route path="/symptom-checker" element={<SymptomChecker />} />
+          <Route path="/medicine-reminder" element={<MedicineReminder />} />
+          <Route path="/educational-hub" element={<EducationalHub />} />
+          <Route path="/emergency-sos" element={<EmergencySOS />} />
+          <Route path="/teleconsultation" element={<Teleconsultation />} />
+
+          {/* You can add a 404 catch-all route here if you want */}
+          {/* <Route path="*" element={<NotFoundPage />} /> */}
+        </Routes>
+      </div>
     </Router>
   );
-};
+}
 
 export default App;
