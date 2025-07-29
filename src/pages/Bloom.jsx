@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";  // Ensure this package is installed
 import "./Bloom.css";
 
 const Bloom = () => {
@@ -11,6 +10,7 @@ const Bloom = () => {
   const recognition = useRef(null);
   const synthesis = useRef(null);
 
+  // --- ALL GOOGLE AI INITIALIZATION CODE HAS BEEN REMOVED FROM HERE ---
 
   const speakMessage = (text) => {
     if (synthesis.current) {
@@ -32,6 +32,7 @@ const Bloom = () => {
       recognition.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         setUserInput(transcript);
+        // Automatically send the message after voice input
         handleSendMessage(transcript);
       };
 
@@ -53,55 +54,10 @@ const Bloom = () => {
     };
   }, []);
 
-// In src/pages/Bloom.jsx
-
-const handleSendMessage = async (message = userInput) => {
-  const cleanMessage = message.trim();
-  if (!cleanMessage) return;
-
-  setMessages((prev) => [
-    ...prev,
-    { text: cleanMessage, sender: "user", timestamp: new Date().toLocaleTimeString() },
-  ]);
-  setUserInput("");
-  setIsTyping(true);
-
-  try {
-    // Call your own backend function
-    const apiResponse = await fetch('/api/bloom', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: cleanMessage }),
-    });
-
-    if (!apiResponse.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await apiResponse.json();
-    const responseText = data.text;
-
-    setMessages((prev) => [
-      ...prev,
-      { text: responseText, sender: "bot", timestamp: new Date().toLocaleTimeString() },
-    ]);
-    speakMessage(responseText);
-  } catch (error) {
-    console.error("Error:", error);
-    setMessages((prev) => [
-      ...prev,
-      {
-        text: "I'm having trouble connecting right now. Please try again later.",
-        sender: "bot",
-        timestamp: new Date().toLocaleTimeString()
-      },
-    ]);
-  } finally {
-    setIsTyping(false);
-  }
-};
+  // --- THIS IS THE NEW, CORRECTED FUNCTION ---
+  const handleSendMessage = async (message = userInput) => {
+    const cleanMessage = message.trim();
+    if (!cleanMessage) return;
 
     setMessages((prev) => [
       ...prev,
@@ -111,15 +67,30 @@ const handleSendMessage = async (message = userInput) => {
     setIsTyping(true);
 
     try {
-      const result = await chatSession.sendMessage(cleanMessage);
-      const response = await result.response.text();
+      // Call your own backend function at /api/bloom
+      const apiResponse = await fetch('/api/bloom', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: cleanMessage }),
+      });
+
+      if (!apiResponse.ok) {
+        // This will catch errors like 404 or 500 from the server
+        throw new Error(`Network response was not ok, status: ${apiResponse.status}`);
+      }
+
+      const data = await apiResponse.json();
+      const responseText = data.text;
+
       setMessages((prev) => [
         ...prev,
-        { text: response, sender: "bot", timestamp: new Date().toLocaleTimeString() },
+        { text: responseText, sender: "bot", timestamp: new Date().toLocaleTimeString() },
       ]);
-      speakMessage(response);
+      speakMessage(responseText);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error sending message:", error);
       setMessages((prev) => [
         ...prev,
         {
@@ -135,7 +106,8 @@ const handleSendMessage = async (message = userInput) => {
 
   const toggleVoiceInput = () => {
     if (!recognition.current) {
-      alert("Speech recognition is not supported in your browser.");
+      // Use a custom modal or a simple message instead of alert
+      console.log("Speech recognition is not supported in your browser.");
       return;
     }
 
@@ -148,7 +120,9 @@ const handleSendMessage = async (message = userInput) => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") handleSendMessage();
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
   };
 
   return (
@@ -156,7 +130,6 @@ const handleSendMessage = async (message = userInput) => {
       <div className="bloom-header">
         <h1>Bloom: AI Pregnancy Assistant</h1>
         <p>Providing pregnancy guidance and support for rural women.</p>
-        
       </div>
 
       <div className="chat-container">
