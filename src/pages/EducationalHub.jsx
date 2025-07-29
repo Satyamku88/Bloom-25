@@ -11,7 +11,6 @@ const EducationalHub = () => {
       link: "https://iris.who.int/bitstream/handle/10665/69735/a91272.pdf",
       videoLink: "https://www.youtube.com/watch?v=Vgmv9kn7o1Y"
     },
-    
     {
       id: 3,
       title: "Hygiene Masterclass",
@@ -20,7 +19,6 @@ const EducationalHub = () => {
       link: "https://www.youtube.com/watch?v=l6XGE-Xuq3M&t=248s",
       duration: "12:45"
     },
-   
     {
       id: 5,
       title: "Child Nutrition",
