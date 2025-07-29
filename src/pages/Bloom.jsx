@@ -12,7 +12,7 @@ const Bloom = () => {
   const synthesis = useRef(null);
 
   // Initialize Google Generative AI (make sure you have installed @google/generative-ai)
-  const apiKey = "api key"; // Replace with your actual API key
+  const apiKey = "AIzaSyDOeIPH1LSme3luWMMVFB2bMVnQCQZUll4"; // Replace with your actual API key
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-pro-exp-02-05",
