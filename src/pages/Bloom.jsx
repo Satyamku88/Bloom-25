@@ -11,22 +11,6 @@ const Bloom = () => {
   const recognition = useRef(null);
   const synthesis = useRef(null);
 
-  // Initialize Google Generative AI (make sure you have installed @google/generative-ai)
-  const apiKey = "AIzaSyD5HMDOD4c3okb21pA0WXXSkdsAi03tu_k"; // Replace with your actual API key
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
-    systemInstruction:
-      "You are Bloom, a compassionate pregnancy support assistant. Provide empathetic, medically accurate information about prenatal care, nutrition, and pregnancy-related concerns. Always maintain a supportive and reassuring tone. Speak responses naturally and conversationally."
-  });
-  const generationConfig = {
-    temperature: 1,
-    topP: 0.95,
-    topK: 64,
-    maxOutputTokens: 8192,
-    responseMimeType: "text/plain",
-  };
-  const chatSession = model.startChat({ generationConfig });
 
   const speakMessage = (text) => {
     if (synthesis.current) {
@@ -69,9 +53,55 @@ const Bloom = () => {
     };
   }, []);
 
-  const handleSendMessage = async (message = userInput) => {
-    const cleanMessage = message.trim();
-    if (!cleanMessage) return;
+// In src/pages/Bloom.jsx
+
+const handleSendMessage = async (message = userInput) => {
+  const cleanMessage = message.trim();
+  if (!cleanMessage) return;
+
+  setMessages((prev) => [
+    ...prev,
+    { text: cleanMessage, sender: "user", timestamp: new Date().toLocaleTimeString() },
+  ]);
+  setUserInput("");
+  setIsTyping(true);
+
+  try {
+    // Call your own backend function
+    const apiResponse = await fetch('/api/bloom', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: cleanMessage }),
+    });
+
+    if (!apiResponse.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await apiResponse.json();
+    const responseText = data.text;
+
+    setMessages((prev) => [
+      ...prev,
+      { text: responseText, sender: "bot", timestamp: new Date().toLocaleTimeString() },
+    ]);
+    speakMessage(responseText);
+  } catch (error) {
+    console.error("Error:", error);
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: "I'm having trouble connecting right now. Please try again later.",
+        sender: "bot",
+        timestamp: new Date().toLocaleTimeString()
+      },
+    ]);
+  } finally {
+    setIsTyping(false);
+  }
+};
 
     setMessages((prev) => [
       ...prev,
