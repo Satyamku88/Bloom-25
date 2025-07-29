@@ -1,5 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./Bloom.css";
+
+// New component to parse and render Markdown-style text
+const ParsedMessage = ({ text }) => {
+  const parts = text.split(/(\*\*.*?\*\*)/g); // Split by **bolded** text
+
+  return (
+    <span>
+      {parts.map((part, index) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return <strong key={index}>{part.slice(2, -2)}</strong>;
+        }
+        return part;
+      })}
+    </span>
+  );
+};
+
 
 const Bloom = () => {
   const [messages, setMessages] = useState([]);
@@ -10,12 +28,19 @@ const Bloom = () => {
   const recognition = useRef(null);
   const synthesis = useRef(null);
 
-  // --- ALL GOOGLE AI INITIALIZATION CODE HAS BEEN REMOVED FROM HERE ---
+  // Scroll to the latest message
+  useEffect(() => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  }, [messages, isTyping]);
 
   const speakMessage = (text) => {
-    if (synthesis.current) {
+    // Strip markdown for speech synthesis
+    const plainText = text.replace(/\*\*/g, '');
+    if (synthesis.current && "speechSynthesis" in window) {
       synthesis.current.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(plainText);
       utterance.rate = 1;
       utterance.pitch = 1;
       synthesis.current.speak(utterance);
@@ -23,70 +48,54 @@ const Bloom = () => {
   };
 
   useEffect(() => {
-    // Initialize speech recognition if supported
     if ("webkitSpeechRecognition" in window) {
       recognition.current = new window.webkitSpeechRecognition();
       recognition.current.continuous = false;
       recognition.current.interimResults = false;
-
       recognition.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         setUserInput(transcript);
-        // Automatically send the message after voice input
         handleSendMessage(transcript);
       };
-
       recognition.current.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
         setIsListening(false);
       };
+       recognition.current.onend = () => {
+        setIsListening(false);
+      };
     }
-
-    // Initialize speech synthesis if supported
     if ("speechSynthesis" in window) {
       synthesis.current = window.speechSynthesis;
     }
-
-    return () => {
-      if (recognition.current) {
-        recognition.current.abort();
-      }
-    };
   }, []);
 
-  // --- THIS IS THE NEW, CORRECTED FUNCTION ---
   const handleSendMessage = async (message = userInput) => {
     const cleanMessage = message.trim();
     if (!cleanMessage) return;
 
     setMessages((prev) => [
       ...prev,
-      { text: cleanMessage, sender: "user", timestamp: new Date().toLocaleTimeString() },
+      { text: cleanMessage, sender: "user", timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
     ]);
     setUserInput("");
     setIsTyping(true);
 
     try {
-      // Call your own backend function at /api/bloom
       const apiResponse = await fetch('/api/bloom', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: cleanMessage }),
       });
 
-      if (!apiResponse.ok) {
-        // This will catch errors like 404 or 500 from the server
-        throw new Error(`Network response was not ok, status: ${apiResponse.status}`);
-      }
-
+      if (!apiResponse.ok) throw new Error(`Network response was not ok, status: ${apiResponse.status}`);
+      
       const data = await apiResponse.json();
       const responseText = data.text;
 
       setMessages((prev) => [
         ...prev,
-        { text: responseText, sender: "bot", timestamp: new Date().toLocaleTimeString() },
+        { text: responseText, sender: "bot", timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
       ]);
       speakMessage(responseText);
     } catch (error) {
@@ -96,7 +105,7 @@ const Bloom = () => {
         {
           text: "I'm having trouble connecting right now. Please try again later.",
           sender: "bot",
-          timestamp: new Date().toLocaleTimeString()
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         },
       ]);
     } finally {
@@ -105,12 +114,7 @@ const Bloom = () => {
   };
 
   const toggleVoiceInput = () => {
-    if (!recognition.current) {
-      // Use a custom modal or a simple message instead of alert
-      console.log("Speech recognition is not supported in your browser.");
-      return;
-    }
-
+    if (!recognition.current) return;
     if (isListening) {
       recognition.current.stop();
     } else {
@@ -120,55 +124,80 @@ const Bloom = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSendMessage();
-    }
+    if (e.key === "Enter") handleSendMessage();
   };
+  
+  const starterPrompts = [
+    "What are common first-trimester symptoms?",
+    "Can you suggest a healthy diet plan?",
+    "What exercises are safe during pregnancy?",
+    "Tell me about postnatal care."
+  ];
 
   return (
-    <div className="bloom-container">
-      <div className="bloom-header">
-        <h1>Bloom: AI Pregnancy Assistant</h1>
-        <p>Providing pregnancy guidance and support for rural women.</p>
-      </div>
-
-      <div className="chat-container">
+    <div className="bloom-page-container">
+      <div className="chat-window">
         <div className="chat-header">
-          <h1>Bloom - Your Pregnancy Companion 🌸</h1>
+           <Link to="/" className="back-button">← Home</Link>
+           <div className="header-info">
+              <h2>Bloom AI Assistant</h2>
+              <p>Your compassionate pregnancy companion</p>
+           </div>
+           <div className="header-icon">🌸</div>
         </div>
+        
         <div className="chat-messages" ref={chatMessagesRef}>
-          {messages.length === 0 && (
-            <div className="welcome-message">
-              <h2>How can I assist you today?</h2>
-              <p>Ask me about pregnancy, nutrition, or healthcare.</p>
+          {messages.length === 0 && !isTyping && (
+            <div className="welcome-container">
+              <div className="welcome-icon">🌸</div>
+              <h1>How can I help you today?</h1>
+              <p>Ask me anything about your pregnancy journey.</p>
+              <div className="starter-prompts">
+                {starterPrompts.map((prompt, index) => (
+                    <button key={index} onClick={() => handleSendMessage(prompt)} className="prompt-button">
+                        {prompt}
+                    </button>
+                ))}
+              </div>
             </div>
           )}
+
           {messages.map((message, index) => (
-            <div key={index} className={`message ${message.sender}-message`}>
-              <span>{message.text}</span>
-              <div className="message-timestamp">{message.timestamp}</div>
+            <div key={index} className={`message-wrapper ${message.sender}`}>
+              <div className="message-bubble">
+                {/* Use the ParsedMessage component for bot messages */}
+                {message.sender === 'bot' ? <ParsedMessage text={message.text} /> : message.text}
+                <div className="message-timestamp">{message.timestamp}</div>
+              </div>
             </div>
           ))}
-          {isTyping && <div className="typing-indicator">Typing...</div>}
+
+          {isTyping && (
+             <div className="message-wrapper bot">
+                <div className="message-bubble typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+          )}
         </div>
-        <div className="input-container">
+        
+        <div className="input-area">
           <input
             type="text"
             className="chat-input"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Type or use voice input..."
+            placeholder="Ask Bloom a question..."
           />
+          <button className={`mic-button ${isListening ? "listening" : ""}`} onClick={toggleVoiceInput}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+          </button>
           <button className="send-button" onClick={() => handleSendMessage()}>
-            Send
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
         </div>
       </div>
-
-      <button className={`voice-button ${isListening ? "listening" : ""}`} onClick={toggleVoiceInput}>
-        {isListening ? "🎙️" : "🔊"}
-      </button>
     </div>
   );
 };
