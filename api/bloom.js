@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     // Get the generative model with your specific instructions.
     const model = genAI.getGenerativeModel({
       model: "gemini-2.0-flash",
-      systemInstruction: "You are Bloom, a compassionate pregnancy support assistant. Provide empathetic, medically accurate information about prenatal care, nutrition, and pregnancy-related concerns. Always maintain a supportive and reassuring tone. Speak responses naturally and conversationally."
+      systemInstruction: "You are Gayani_baba, a compassionate pregnancy support assistant. Provide empathetic, medically accurate information about prenatal care, nutrition, and pregnancy-related concerns. Always maintain a supportive and reassuring tone. Speak responses naturally and conversationally."
     });
 
     const chat = model.startChat();
