@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Stethoscope, Video, AlarmClock, BookOpen, Siren, BrainCircuit, ArrowRight, UserCheck, MessageSquare, ClipboardCheck } from 'lucide-react';
 
 // New FeatureCard Component with an enhanced glassmorphism design
@@ -185,32 +185,4 @@ const Home = () => {
   );
 };
 
-// Mock Page Component for demonstration purposes in the preview.
-const MockPage = ({ title }) => (
-    <div className="flex flex-col items-center justify-center h-screen bg-slate-900 text-white p-4">
-        <h1 className="text-4xl font-bold text-center mb-4">This is the {title} page.</h1>
-        <p className="text-slate-400 text-center mb-8">In your application, the actual component for this page would be rendered here.</p>
-        <Link to="/" className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/40 transform hover:scale-105">
-            Back to Home
-        </Link>
-    </div>
-);
-
-// Main App component to wrap the Home component with a Router.
-const App = () => {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/symptom-checker" element={<MockPage title="Symptom Checker" />} />
-                <Route path="/teleconsultation" element={<MockPage title="Teleconsultation" />} />
-                <Route path="/medicine-reminder" element={<MockPage title="Medicine Reminder" />} />
-                <Route path="/educational-hub" element={<MockPage title="Educational Hub" />} />
-                <Route path="/emergency-sos" element={<MockPage title="Emergency SOS" />} />
-                <Route path="/bloom" element={<MockPage title="Bloom AI" />} />
-            </Routes>
-        </Router>
-    );
-}
-
-export default App;
+export default Home;
