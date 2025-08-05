@@ -20,6 +20,7 @@
     "axios": "^1.8.1",
     "framer-motion": "^12.4.7",
     "i18next": "^24.2.2",
+    "lucide-react": "^0.536.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
