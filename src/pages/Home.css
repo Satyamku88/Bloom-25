@@ -1,17 +1,21 @@
-/* General Styling for the Home Page Container */
+/* Import modern Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 .home-container {
-  font-family: 'Inter', sans-serif;
-  color: #333;
-  background-color: #fdf8f6; /* Soft off-white background */
+  font-family: 'Poppins', sans-serif;
+  color: #1f1f1f;
+  background: linear-gradient(135deg, #f7faff, #e4ecf7);
 }
 
 /* Header Section Styling */
 .home-header {
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7); /* Soft pink gradient */
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: white;
   text-align: center;
-  padding: 80px 20px;
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  padding: 100px 20px;
+  clip-path: ellipse(120% 100% at 50% 0%);
+  position: relative;
+  overflow: hidden;
 }
 
 .header-content {
@@ -20,117 +24,98 @@
 }
 
 .main-title {
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .subtitle {
-  font-size: 1.5rem;
-  font-weight: 300;
+  font-size: 1.75rem;
+  font-weight: 400;
+  opacity: 0.95;
   margin-bottom: 1.5rem;
-  opacity: 0.9;
 }
 
 .description {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
-}
-
-.cta-button {
-  background-color: white;
-  color: #ee9ca7;
-  padding: 15px 35px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  background-color: #fff0f1;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  opacity: 0.9;
 }
 
 /* Features Section Styling */
 .features-section {
   padding: 80px 20px;
-  max-width: 1200px;
-  margin: -50px auto 0; /* Overlap the header slightly */
+  max-width: 1300px;
+  margin: -60px auto 0;
   position: relative;
   z-index: 10;
 }
 
 .section-title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 600;
-  margin-bottom: 50px;
-  color: #555;
+  margin-bottom: 60px;
+  color: #333;
 }
 
+/* Feature Cards */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px;
 }
 
-/* Individual Feature Card Styling */
 .feature-card {
-  background-color: white;
-  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
   padding: 30px;
   text-align: center;
   text-decoration: none;
-  color: #333;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-  transition: all 0.3s ease-in-out;
-  border-top: 4px solid transparent; /* For color accent */
+  color: #1f1f1f;
+  border-top: 5px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
 }
 
 .feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
 .feature-icon {
   font-size: 3rem;
   margin-bottom: 20px;
-  line-height: 1;
 }
 
 .feature-title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .feature-description {
   font-size: 1rem;
-  line-height: 1.6;
-  flex-grow: 1; /* Pushes the link to the bottom */
+  color: #555;
+  flex-grow: 1;
   margin-bottom: 20px;
-  color: #666;
 }
 
 .card-link {
   font-weight: 600;
-  color: #555;
+  color: #333;
   transition: color 0.3s ease;
 }
 
 .feature-card:hover .card-link {
-  color: #ee9ca7;
+  color: #6e8efb;
 }
 
-/* Card Color Accents */
+/* Color Accents */
 .feature-card.pink { border-color: #ffdde1; }
 .feature-card.blue { border-color: #a6c1ee; }
 .feature-card.green { border-color: #a8e063; }
@@ -138,11 +123,53 @@
 .feature-card.red { border-color: #ff9a9e; }
 .feature-card.yellow { border-color: #f6d365; }
 
-/* Footer Styling */
-.home-footer {
+/* Get in Touch Section */
+.get-in-touch-section {
+  background: linear-gradient(135deg, #fbeaff, #e1ecff);
+  padding: 60px 20px;
   text-align: center;
-  padding: 40px 20px;
-  background-color: #f4f4f4;
-  color: #777;
-  border-top: 1px solid #e7e7e7;
+  margin-top: 80px;
+}
+
+.touch-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.touch-content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.touch-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #444;
+}
+
+.touch-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #6e8efb;
+  color: white;
+  border-radius: 40px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.touch-button:hover {
+  background-color: #4c6ef5;
+}
+
+/* Footer */
+.home-footer {
+  background-color: #f1f3f5;
+  color: #888;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.95rem;
+  margin-top: 60px;
+  border-top: 1px solid #ddd;
 }
