@@ -2,19 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Stethoscope, Video, AlarmClock, BookOpen, Siren, BrainCircuit, ArrowRight } from 'lucide-react';
 
-// Mock Page Component: This is a placeholder for your actual pages to make the links work in this preview.
-// You would use your actual page components in your project.
-const MockPage = ({ title }) => (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white p-4">
-        <h1 className="text-4xl font-bold text-center mb-4">This is the {title} page.</h1>
-        <p className="text-gray-400 text-center mb-8">In your application, the actual component for this page would be rendered here.</p>
-        <Link to="/" className="bg-teal-500 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:shadow-teal-500/40 transform hover:scale-105">
-            Back to Home
-        </Link>
-    </div>
-);
-
-
 // FeatureCard Component: A reusable card for each feature on the home page.
 const FeatureCard = ({ icon, title, description, link, color }) => (
     <Link to={link} className="block group">
@@ -42,7 +29,6 @@ const FeatureCard = ({ icon, title, description, link, color }) => (
 // Redesigned Home Component
 const Home = () => {
   // Array of features to be displayed on the home page.
-  // This makes it easy to add or modify features in the future.
   const features = [
     {
       icon: <Stethoscope size={32} className="text-teal-400" />,
@@ -110,7 +96,7 @@ const Home = () => {
             Your Health, Reimagined.
           </h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-            Gayani_Baba is your all-in-one intelligent health assistant. We empower you to take control of your well-being with cutting-edge tools and personalized support.
+            Bloom is your all-in-one intelligent health assistant. We empower you to take control of your well-being with cutting-edge tools and personalized support.
           </p>
           <a href="#features" className="bg-teal-500 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:shadow-teal-500/40 transform hover:scale-105">
             Explore Features
@@ -138,7 +124,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="bg-gray-900/50 border-t border-white/10 mt-20">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Gayani_Baba. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Bloom. All rights reserved.</p>
           <p className="mt-2 text-sm">Your trusted partner in digital healthcare.</p>
         </div>
       </footer>
@@ -146,23 +132,34 @@ const Home = () => {
   );
 };
 
+// Mock Page Component for demonstration purposes in the preview.
+const MockPage = ({ title }) => (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white p-4">
+        <h1 className="text-4xl font-bold text-center mb-4">This is the {title} page.</h1>
+        <p className="text-gray-400 text-center mb-8">In your application, the actual component for this page would be rendered here.</p>
+        <Link to="/" className="bg-teal-500 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:bg-teal-400 hover:shadow-lg hover:shadow-teal-500/40 transform hover:scale-105">
+            Back to Home
+        </Link>
+    </div>
+);
 
-// Main App Component
-// This sets up the router to allow navigation between the home page and the feature pages.
-// In your actual application, you would integrate this into your existing routing setup in App.jsx.
-export default function App() {
+// Main App component to wrap the Home component with a Router.
+// This makes the artifact self-contained and runnable.
+const App = () => {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                {/* Routes for each feature page, rendering the MockPage component */}
+                {/* Adding mock routes for the links to work in the preview */}
                 <Route path="/symptom-checker" element={<MockPage title="Symptom Checker" />} />
                 <Route path="/teleconsultation" element={<MockPage title="Teleconsultation" />} />
                 <Route path="/medicine-reminder" element={<MockPage title="Medicine Reminder" />} />
                 <Route path="/educational-hub" element={<MockPage title="Educational Hub" />} />
                 <Route path="/emergency-sos" element={<MockPage title="Emergency SOS" />} />
-                <Route path="/bloom" element={<MockPage title="Gayani_Baba AI" />} />
+                <Route path="/bloom" element={<MockPage title="Bloom AI" />} />
             </Routes>
         </Router>
     );
 }
+
+export default App;
